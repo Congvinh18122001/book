@@ -8,6 +8,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
 </head>
 <style>
   .mt-3{
@@ -50,17 +52,25 @@
 <br>
   <form method="POST" action="{{ route('insertcategory') }}">
      {{ csrf_field() }}
+     <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">ID</span>
+      </div>
+    <input type="text" class="form-control" name="id" placeholder="...Id" value="{{$id}}" readonly>
+    </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">tên danh mục</span>
         </div>
         <input type="text" class="form-control" name="category">
       </div>
+      <br>
       <button type="submit" class="btn btn-primary">Save</button>
 
 
   </form>
- 
+  <br>
+ <a href="{{ route('displayCategory') }}"class="btn btn-primary">Show Category</a>
 </div>
 <footer class="py-5 bg-dark" clear="bottom">
   <div class="container">

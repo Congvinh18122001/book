@@ -9,13 +9,27 @@ class bookController extends Controller
 {
     //
     function inputbook(Request $request){
-        return view('book.inPutBook');
+        $id=$title = $price =  $href_param = $content='';
+        $categoryList=DB::table('category')->get();
+
+        return view('book.inPutBook')->with([
+            'id'=>$id,
+            'categoryList'=>$categoryList,
+            'title' => $title,
+            'price' => $price,
+            'href_param' => $href_param,
+            'content'=>$content
+        ]);
     }
     function inputcategory(Request $request){
-        return view('book.inputCategory');
+        $id= '';
+        return view('book.inputCategory')->with([
+            'id'=>$id
+        ]);
     }
     // BookController
     function insertbook(Request $request){
+        $bookList=DB::table('book')->get();
         $categoryId = $request->categoryId;
         $title = $request->title;
         $content = $request->content;
@@ -23,7 +37,30 @@ class bookController extends Controller
         $href_param = $request->href_param;
         $create_date = $request->create_date;
         $update_date =$request->update_date ;
-        DB::table('book')->insert([
+        $id=$request->id ;
+        $isCheck=false;
+
+        foreach ($bookList as $value) {
+            # code...
+            if ($value->id==$id) {
+                # code...
+                DB::table('book')
+                ->where('id', $value->id)
+                ->update([
+            'categoryId' => $categoryId,
+            'title' => $title,
+            'content' => $content,
+            'price' => $price,
+            'href_param' => $href_param,
+            'create_date' => $create_date,
+            'update_date' =>$update_date 
+                ]);
+                $isCheck=true;
+            }
+        }
+       if (!$isCheck) {
+           # code...
+           DB::table('book')->insert([
             'categoryId' => $categoryId,
             'title' => $title,
             'content' => $content,
@@ -32,6 +69,7 @@ class bookController extends Controller
             'create_date' => $create_date,
             'update_date' =>$update_date 
         ]);
+       }
         return redirect()->route('displayBook');
     }
     function displaybook(){
@@ -58,14 +96,56 @@ class bookController extends Controller
             'index'=> 0
         ]);
      }
+     function editBook(Request $request,$id){ 
+        $categoryList=DB::table('category')->get();
+        $book = DB::table('book')->where('id',$id)->first();
+        $title = $book->title;
+        $price =   $book->price;
+        $href_param = $book->href_param;
+        $content = $book->content;
+        return view('book.inPutBook')->with([
+            'id' => $id,
+            'categoryList'=>$categoryList,
+            'title' => $title,
+            'price' => $price,
+            'href_param' => $href_param,
+            'content'=>$content
+
+        ]);
+     }
+     function deletebook($id){
+        DB::table('book')->where('id',$id)->delete();
+        return redirect()->route('displayBook');
+
+     }
       // category Controller
+      function editCategory(Request $request,$id){
+ 
+        return view('book.inputCategory')->with([
+            'id' => $id
+        ]);
+     }
     function insertcategory(Request $request){
         $category = $request->category;
-       
-        DB::table('category')->insert([
+        $categoryList=DB::table('category')->get();
+        $isCheck=false;
+        foreach ($categoryList as $value) {
+            if ($value->id==$request->id) {
+                # code...
+                DB::table('category')
+                ->where('id', $value->id)
+                ->update(['category' => $category]);
+                $isCheck=true;
+
+            }
+        }
+       if (!$isCheck) {
+           # code...
+           DB::table('category')->insert([
             'category' => $category,
             
         ]);
+       }
         return redirect()->route('displayCategory');
     }
     function displaycategory(){
@@ -84,6 +164,12 @@ class bookController extends Controller
             'index'=> 0
         ]);
      }
+     function deletecategory($id){
+          DB::table('category')->where('id',$id)->delete();
+          return redirect()->route('displayCategory');
+
+     }
+ 
      //main
      function viewmain(Request $request){
            return view('book.main');

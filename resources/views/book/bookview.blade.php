@@ -8,6 +8,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
 </head>
 <body>
   <!-- Navigation -->
@@ -32,7 +34,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="{{ route('displayCategory') }}">Category</a>
           </li>
         </ul>
       </div>
@@ -72,8 +74,8 @@
             <td>{{$book->update_date}}</td>
           <td><a href="/book/displaycategoryofid/{{$book->categoryId}}">-- {{$book->categoryId}} --</a></td>
             <td>{{$book->content}}</td>
-            <td> <a href="/editbook/{{ $book->id }}" class="btn btn-warning">Sửa</a></td>
-            <td> <a href="/deletebook/{{ $book->id }}" class="btn btn-danger">Xóa</a></td>
+            <td> <a href="/book/editBook/{{ $book->id }}" class="btn btn-warning">Sửa</a></td>
+            <td> <a href="/book/deletebook/{{ $book->id }}" class="btn btn-danger">Xóa</a></td>
 
           </tr>
       @endforeach

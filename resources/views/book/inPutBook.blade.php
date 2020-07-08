@@ -8,6 +8,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
 </head>
 <body>
     <!-- Navigation -->
@@ -46,34 +48,40 @@
   <br>
     <form method="POST" action="{{ route('insertbook') }}" >
       {{ csrf_field() }}
-  
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Id </span>
+        </div>
+      <input type="text" class="form-control" name="id" value="{{$id}}" placeholder="id" readonly>
+      </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">Tên sách </span>
         </div>
-        <input type="text" class="form-control" name="title" >
+      <input type="text" class="form-control" value="{{$title}}" name="title" >
       </div>
-      <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Id danh mục</span>
-          </div>
-          <input type="text" class="form-control" name="categoryId">
-        </div>
+      <select name="categoryId" class="custom-select mb-3">
+        <option selected>Danh mục</option>
+       @foreach ($categoryList as $item)
+      <option value="{{$item->id}}">{{$item->category}}</option>
+       
+       @endforeach
+      </select>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text">Giá</span>
           </div>
-          <input type="text" class="form-control" name="price">
+        <input type="text" class="form-control" value="{{$price}}" name="price">
         </div>
         <div class="form-group">
           <label for="comment">Nội dung:</label>
-          <textarea class="form-control" rows="5" id="comment" name="content"></textarea>
+        <textarea class="form-control" rows="5" id="comment"  placeholder ="Content..."  name="content">{{$content}}</textarea>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text">href_param</span>
           </div>
-          <input type="text" class="form-control" name="href_param">
+        <input type="text" class="form-control" value="{{$href_param}}" name="href_param">
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
